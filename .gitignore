@@ -1,5 +1,6 @@
 # 1. НЕ ЗАЛИВАТЬ зависимости
 node_modules/
+frontend/node_modules/
 
 # 2. НЕ ЗАЛИВАТЬ базу данных
 data/database.sqlite
@@ -18,3 +19,7 @@ Thumbs.db
 
 # 5. НЕ ЗАЛИВАТь файлы окружения (будут позже)
 .env
+.env.local
+.env.development.local
+frontend/.env
+frontend/.env.local

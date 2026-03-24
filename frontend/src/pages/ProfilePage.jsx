@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useAppContext } from '../context/AppContext';
 
 const Container = styled.div`
   max-width: 600px;
@@ -40,8 +41,9 @@ const Button = styled.button`
   margin-top: 10px;
 `;
 
-const ProfilePage = ({ currentUser, setCurrentUser }) => {
-    const [username, setUsername] = React.useState(currentUser.name);
+const ProfilePage = () => {
+    const { currentUser, setCurrentUser } = useAppContext();
+    const [username, setUsername] = useState(currentUser.name);
 
     const handleSubmit = (e) => {
         e.preventDefault();

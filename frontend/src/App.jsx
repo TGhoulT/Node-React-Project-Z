@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ChatPage from './pages/ChatPage';
 import AboutPage from './pages/AboutPage';
 import ProfilePage from './pages/ProfilePage';
 
-// Стилизованные компоненты для навигации
 const Nav = styled.nav`
   background: #667eea;
   padding: 1rem;
@@ -31,45 +30,8 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const App = () => {
-    const [messages, setMessages] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [rooms, setRooms] = useState([]);
-    const [currentUser, setCurrentUser] = useState({ id: 1, name: 'Алексей' });
-    const [currentRoom, setCurrentRoom] = useState({ id: 1, name: 'Общий чат' });
-
-    // Загрузка mock-данных
-    useEffect(() => {
-        const mockMessages = [
-            { id: 1, text: 'Привет всем! Как дела?', authorId: 1, authorName: 'Алексей', roomId: 1, timestamp: '2023-10-26T10:30:00Z' },
-            { id: 2, text: 'Всем спасибо, у меня всё отлично!', authorId: 2, authorName: 'Мария', roomId: 1, timestamp: '2023-10-26T10:35:00Z' },
-        ];
-        const mockUsers = [
-            { id: 1, name: 'Алексей', avatarColor: '#3498db' },
-            { id: 2, name: 'Мария', avatarColor: '#e74c3c' },
-            { id: 3, name: 'Иван', avatarColor: '#2ecc71' },
-        ];
-        const mockRooms = [
-            { id: 1, name: 'Общий чат', description: 'Основная комната' },
-            { id: 2, name: 'Флудилка', description: 'Для неформального общения' },
-        ];
-        setMessages(mockMessages);
-        setUsers(mockUsers);
-        setRooms(mockRooms);
-    }, []);
-
-    const handleSendMessage = (text) => {
-        const newMessage = {
-            id: messages.length + 1,
-            text,
-            authorId: currentUser.id,
-            authorName: currentUser.name,
-            roomId: currentRoom.id,
-            timestamp: new Date().toISOString(),
-        };
-        setMessages([...messages, newMessage]);
-    };
-
+function App() {
+    // Контекст используется дочерними компонентами, в App он не нужен, но можно взять для навигации
     return (
         <BrowserRouter>
             <div>
@@ -80,35 +42,14 @@ const App = () => {
                 </Nav>
                 <Container>
                     <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <ChatPage
-                                    currentUser={currentUser}
-                                    currentRoom={currentRoom}
-                                    setCurrentRoom={setCurrentRoom}
-                                    messages={messages}
-                                    users={users}
-                                    rooms={rooms}
-                                    onSendMessage={handleSendMessage}
-                                />
-                            }
-                        />
+                        <Route path="/" element={<ChatPage />} />
                         <Route path="/about" element={<AboutPage />} />
-                        <Route
-                            path="/profile"
-                            element={
-                                <ProfilePage
-                                    currentUser={currentUser}
-                                    setCurrentUser={setCurrentUser}
-                                />
-                            }
-                        />
+                        <Route path="/profile" element={<ProfilePage />} />
                     </Routes>
                 </Container>
             </div>
         </BrowserRouter>
     );
-};
+}
 
 export default App;
